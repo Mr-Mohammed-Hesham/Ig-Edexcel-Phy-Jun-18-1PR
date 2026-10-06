@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> IGCSE Physics Paper 1P - امتحان شامل | Mr. Mohammed Hesham</title>
+<meta name="description" content="امتحان تفاعلي شامل لفيزياء IGCSE Paper 1P - 14 سؤال">
+<meta name="author" content="Mr. Mohammed Hesham">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; }
+body.en-mode { font-family: 'Inter', sans-serif; }
+.correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+.incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+.timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.7; } }
+@media print { .no-print { display: none !important; } }
+.success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+.grade-excellent { background: #dcfce7; color: #166534; }
+.grade-good { background: #fef3c7; color: #92400e; }
+.grade-pass { background: #dbeafe; color: #1e40af; }
+.grade-fail { background: #fee2e2; color: #991b1b; }
+.lang-switch {
+position: fixed; top: 16px; left: 16px; z-index: 100;
+background: white; padding: 6px; border-radius: 30px;
+box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+border: 2px solid #dc2626;
+}
+[dir="ltr"] .lang-switch { left: auto; right: 16px; }
+.lang-btn {
+padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+transition: all 0.3s; border: none; font-size: 0.875rem;
+background: transparent; color: #6b7280;
+}
+.lang-btn.active { background: #dc2626; color: white; box-shadow: 0 2px 6px rgba(220,38,38,0.4); }
+.lang-btn:hover:not(.active) { background: #fef2f2; color: #dc2626; }
+.shuffle-badge {
+display: inline-block;
+background: linear-gradient(135deg, #dc2626, #b91c1c);
+color: white; padding: 4px 12px; border-radius: 20px;
+font-size: 0.75rem; font-weight: bold; margin-right: 8px;
+}
+.math-display {
+display: inline-block; direction: ltr;
+font-family: 'Times New Roman', 'Cambria Math', serif;
+font-size: 1.15em; font-style: italic;
+padding: 2px 8px; background: #fef2f2;
+border-radius: 6px; margin: 2px;
+color: #991b1b; font-weight: 600; letter-spacing: 0.5px;
+}
+.save-indicator {
+position: fixed; bottom: 20px; left: 20px; z-index: 200;
+background: #10b981; color: white; padding: 8px 16px;
+border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+opacity: 0; transition: opacity 0.3s; pointer-events: none;
+box-shadow: 0 4px 12px rgba(16,185,129,0.4);
+}
+.save-indicator.show { opacity: 1; }
+.formula-box {
+background: #fef2f2; border: 2px solid #f87171;
+border-radius: 8px; padding: 12px; margin: 10px 0;
+font-family: 'Times New Roman', serif;
+direction: ltr; text-align: center;
+}
+.svg-graph {
+display: block;
+margin: 12px auto;
+background: white;
+border: 2px solid #e5e7eb;
+border-radius: 12px;
+padding: 8px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.graph-container { text-align: center; margin: 10px 0; }
+.module-badge {
+display: inline-block;
+padding: 4px 16px;
+border-radius: 20px;
+font-weight: bold;
+font-size: 0.85rem;
+margin-bottom: 8px;
+}
+.module-1 { background: #fee2e2; color: #991b1b; }
+.module-2 { background: #fef3c7; color: #92400e; }
+</style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-orange-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+<div class="lang-switch no-print">
+<button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+<button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+</div>
+
+<div id="saveIndicator" class="save-indicator"> <span data-ar="تم الحفظ" data-en="Saved">تم الحفظ</span></div>
+
+<div id="timer-container" class="max-w-5xl mx-auto mb-4 text-center no-print">
+<div class="bg-white p-4 rounded-2xl shadow-md inline-block border-2 border-red-100">
+<span class="text-gray-600 ml-2" data-ar="⏰ الوقت المتبقي:" data-en="⏰ Time Remaining:">⏰ الوقت المتبقي:</span>
+<span id="timer" class="text-2xl font-bold text-red-600 font-mono">120:00</span>
+<span class="shuffle-badge" data-ar=" IGCSE Physics - 14 Question" data-en="🎲 IGCSE Physics - 14 Questions">🎲 IGCSE Physics - 14 Question</span>
+</div>
+</div>
+
+<div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+<button onclick="toggleAnswers()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="👀 إظهار / إخفاء الإجابات" data-en="👀 Show / Hide Answers">👀 إظهار / إخفاء الإجابات</button>
+<button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة" data-en="🖨️ Print">🖨️ طباعة</button>
+<button onclick="reshuffleExam()" class="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🔄 أسئلة جديدة" data-en="🔄 New Questions"> أسئلة جديدة</button>
+<button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🗑️ مسح التقدم" data-en="️ Clear Progress">🗑️ مسح التقدم</button>
+</div>
+
+<header class="max-w-5xl mx-auto bg-white p-6 rounded-2xl shadow-lg mb-8 border-4 border-red-400">
+<div class="text-center">
+<div class="inline-block bg-red-600 text-white px-4 py-1 rounded-full text-xs font-bold mb-2">IGCSE PHYSICS - Paper 1P</div>
+<h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="🔬 IGCSE Physics Paper 1P" data-en="🔬 IGCSE Physics Paper 1P">🔬 IGCSE Physics Paper 1P</h1>
+<h2 class="text-lg text-red-600 font-semibold" data-ar="14 سؤال شامل - الكهرباء، الموجات، الطاقة، الضغط، الإشعاع" data-en="14 Questions - Electricity, Waves, Energy, Pressure, Radiation">14 سؤال شامل - الكهرباء، الموجات، الطاقة، الضغط، الإشعاع</h2>
+<p class="text-sm text-gray-600 mt-2" data-ar="الدوائر الكهربائية، المدارات، الانكسار، قانون بويل، الأقمار الصناعية، الكربون-14" data-en="Electric circuits, orbits, refraction, Boyle's law, satellites, Carbon-14">الدوائر الكهربائية، المدارات، الانكسار، قانون بويل، الأقمار الصناعية، الكربون-14</p>
+<p class="text-xs text-green-600 mt-2 font-semibold" data-ar="💾 يتم حفظ تقدمك تلقائياً" data-en="💾 Progress saved automatically">💾 يتم حفظ تقدمك تلقائياً</p>
+</div>
+<div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+<span><span data-ar="📅 التاريخ:" data-en="📅 Date:"> التاريخ:</span> <input type="text" id="examDate" class="border-b-2 border-red-300 bg-transparent w-28 text-center"></span>
+<span><span data-ar="😊 الاسم:" data-en="😊 Name:">😊 الاسم:</span> <input type="text" id="studentName" class="border-b-2 border-red-300 bg-transparent w-32 text-center" placeholder="اكتب اسمك"></span>
+<span><span data-ar="🏫 الشعبة:" data-en=" Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b-2 border-red-300 bg-transparent w-28 text-center" placeholder="الشعبة"></span>
+<span data-ar="⏰ المدة: 120 دقيقة" data-en=" Duration: 120 min"> المدة: 120 دقيقة</span>
+<span data-ar="📊 المجموع: 14 سؤال" data-en="📊 Total: 14 Questions">📊 المجموع: 14 سؤال</span>
+</div>
+</header>
+
+<div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border-2 border-red-200 no-print">
+<h3 class="font-bold text-lg mb-3 text-red-700 text-center" data-ar="📐 الصيغ الأساسية" data-en="📐 Key Formulae"> الصيغ الأساسية</h3>
+<div class="grid md:grid-cols-3 gap-3 text-sm">
+<div class="formula-box"><strong>Power:</strong> P = I × V</div>
+<div class="formula-box"><strong>Ohm's Law:</strong> V = I × R</div>
+<div class="formula-box"><strong>Charge:</strong> Q = I × t</div>
+<div class="formula-box"><strong>Wave:</strong> v = f × λ</div>
+<div class="formula-box"><strong>Pressure:</strong> p = F/A = hρg</div>
+<div class="formula-box"><strong>GPE:</strong> E = mgh</div>
+<div class="formula-box"><strong>KE:</strong> E = ½mv²</div>
+<div class="formula-box"><strong>Boyle's Law:</strong> P₁V₁ = P₂V₂</div>
+<div class="formula-box"><strong>Refractive Index:</strong> n = sin(i)/sin(r)</div>
+</div>
+</div>
+
+<main class="max-w-5xl mx-auto space-y-8" id="exam-content"></main>
+
+<div class="text-center no-print pb-8 mt-8">
+<button onclick="gradeExam()" class="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white text-lg px-10 py-4 rounded-2xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="🎯 صحح إجاباتي!" data-en="🎯 Grade My Answers!"> صحح إجاباتي!</button>
+</div>
+
+<div id="results-panel" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-4 border-red-400 hidden no-print">
+<h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="🏆 نتيجتك يا بطل! " data-en="🏆 Your Results, Champion! 🏆">🏆 نتيجتك يا بطل! 🏆</h2>
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+<div class="bg-red-50 p-4 rounded-xl text-center"><p data-ar="😊 الاسم" data-en="😊 Name">😊 الاسم</p><p id="res-name" class="font-bold text-xl text-red-700">-</p></div>
+<div class="bg-orange-50 p-4 rounded-xl text-center"><p data-ar="📅 التاريخ" data-en="📅 Date">📅 التاريخ</p><p id="res-date" class="font-bold text-xl text-orange-700">-</p></div>
+<div class="bg-red-50 p-4 rounded-xl text-center"><p data-ar="🌟 المجموع" data-en="🌟 Score">🌟 المجموع</p><p id="res-total" class="font-bold text-3xl text-red-600">0 / 100</p></div>
+</div>
+<div class="text-center mb-6">
+<span id="success-badge" class="success-badge grade-excellent">-</span>
+<p id="success-percent" class="text-4xl font-bold text-red-600 mt-2">0%</p>
+<p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-xl mb-6">
+<h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📊 أدائك في كل قسم:" data-en="📊 Your Performance:">📊 أدائك في كل قسم:</h3>
+<div class="space-y-3" id="sections-performance"></div>
+</div>
+<div class="text-center mb-6">
+<button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-red-600 to-orange-600 text-white text-lg px-8 py-3 rounded-2xl font-bold shadow-xl transition cursor-pointer" data-ar="📧 أرسل النتيجة للمعلم" data-en="📧 Send Results to Teacher">📧 أرسل النتيجة للمعلم</button>
+<p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+</div>
+<div class="flex gap-3 justify-center">
+<button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold" data-ar="🖨️ طباعة النتيجة" data-en="🖨️ Print Results">️ طباعة النتيجة</button>
+</div>
+</div>
+
+<footer class="max-w-5xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+© <span data-ar="IGCSE Physics Paper 1P" data-en="IGCSE Physics Paper 1P">IGCSE Physics Paper 1P</span> | Mr. Mohammed Hesham 🔬
+</footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+emailjs.init(PUBLIC_KEY);
+
+const STORAGE_KEY = 'igcse_physics_1p_comprehensive_v1';
+const TOTAL_TIME = 7200;
+const TOTAL_QUESTIONS = 14;
+
+let currentSeed = null;
+let answersVisible = false;
+let saveIndicatorTimeout = null;
+
+function mulberry32(a) {
+    return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+let rng = null;
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('show');
+    if (saveIndicatorTimeout) clearTimeout(saveIndicatorTimeout);
+    saveIndicatorTimeout = setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+function saveState(showIndicator = true) {
+    try {
+        const state = {
+            seed: currentSeed, lang: currentLang,
+            studentName: document.getElementById('studentName').value,
+            studentClass: document.getElementById('studentClass').value,
+            examDate: document.getElementById('examDate').value,
+            answers: getSelectedAnswers(),
+            timeRemaining: timeRemaining,
+            answersVisible: answersVisible, savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (showIndicator) showSaveIndicator();
+    } catch (e) { console.error('Save error:', e); }
+}
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+}
+
+function getSelectedAnswers() {
+    const answers = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected) answers[i] = selected.value;
+    }
+    return answers;
+}
+
+function restoreAnswers(answers) {
+    if (!answers) return;
+    for (const [idx, val] of Object.entries(answers)) {
+        const radio = document.querySelector(`input[name="q${idx}"][value="${val}"]`);
+        if (radio) radio.checked = true;
+    }
+}
+
+function clearProgress() {
+    const msg = currentLang === 'ar' ? '⚠️ هل أنت متأكد من مسح كل التقدم؟' : '⚠️ Clear all progress?';
+    if (confirm(msg)) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+}
+
+function setupAnswerListeners() {
+    document.getElementById('exam-content').addEventListener('change', (e) => {
+        if (e.target.type === 'radio') saveState();
+    });
+}
+
+function setupInputListeners() {
+    ['studentName', 'studentClass', 'examDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => saveState(false));
+            el.addEventListener('blur', () => saveState());
+        }
+    });
+}
+
+// ==================== SVG Diagrams ====================
+const svgGraphs = {
+    circuit_symbols: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#991b1b" font-weight="bold">🔌 رموز الدوائر الكهربائية</text>
+        <!-- Switch -->
+        <line x1="30" y1="60" x2="70" y2="60" stroke="#374151" stroke-width="2"/>
+        <line x1="70" y1="60" x2="100" y2="45" stroke="#374151" stroke-width="2"/>
+        <circle cx="30" cy="60" r="3" fill="#374151"/>
+        <circle cx="100" cy="60" r="3" fill="#374151"/>
+        <text x="65" y="80" text-anchor="middle" font-size="10" fill="#991b1b">Switch</text>
+        <!-- Lamp -->
+        <circle cx="170" cy="60" r="20" fill="none" stroke="#374151" stroke-width="2"/>
+        <line x1="155" y1="45" x2="185" y2="75" stroke="#374151" stroke-width="2"/>
+        <line x1="185" y1="45" x2="155" y2="75" stroke="#374151" stroke-width="2"/>
+        <text x="170" y="100" text-anchor="middle" font-size="10" fill="#991b1b">Lamp</text>
+        <!-- Resistor -->
+        <rect x="240" y="50" width="60" height="20" fill="none" stroke="#374151" stroke-width="2"/>
+        <text x="270" y="100" text-anchor="middle" font-size="10" fill="#991b1b">Resistor</text>
+        <!-- Voltmeter -->
+        <circle cx="80" cy="160" r="20" fill="none" stroke="#374151" stroke-width="2"/>
+        <text x="80" y="165" text-anchor="middle" font-size="14" fill="#374151" font-weight="bold">V</text>
+        <text x="80" y="200" text-anchor="middle" font-size="10" fill="#991b1b">Voltmeter</text>
+        <!-- Ammeter -->
+        <circle cx="200" cy="160" r="20" fill="none" stroke="#374151" stroke-width="2"/>
+        <text x="200" y="165" text-anchor="middle" font-size="14" fill="#374151" font-weight="bold">A</text>
+        <text x="200" y="200" text-anchor="middle" font-size="10" fill="#991b1b">Ammeter</text>
+        <!-- Diode -->
+        <polygon points="290,140 320,160 290,180" fill="none" stroke="#374151" stroke-width="2"/>
+        <line x1="320" y1="140" x2="320" y2="180" stroke="#374151" stroke-width="2"/>
+        <text x="305" y="200" text-anchor="middle" font-size="10" fill="#991b1b">Diode</text>
+    </svg>`,
+    
+    orbits: `<svg class="svg-graph" width="400" height="280" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="270" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold"> مدارات الكواكب والمذنبات</text>
+        <circle cx="200" cy="140" r="25" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="145" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">الشمس</text>
+        <!-- Earth orbit (nearly circular) -->
+        <ellipse cx="200" cy="140" rx="80" ry="75" fill="none" stroke="#2563eb" stroke-width="2"/>
+        <circle cx="280" cy="140" r="6" fill="#2563eb"/>
+        <text x="290" y="135" font-size="10" fill="#2563eb" font-weight="bold">Earth</text>
+        <!-- Mercury orbit (smaller) -->
+        <ellipse cx="200" cy="140" rx="50" ry="48" fill="none" stroke="#10b981" stroke-width="2"/>
+        <circle cx="250" cy="140" r="4" fill="#10b981"/>
+        <text x="255" y="135" font-size="9" fill="#10b981">Mercury</text>
+        <!-- Comet orbit (highly elliptical) -->
+        <ellipse cx="280" cy="140" rx="150" ry="40" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,3"/>
+        <circle cx="130" cy="140" r="5" fill="#dc2626"/>
+        <text x="110" y="130" font-size="10" fill="#dc2626" font-weight="bold">Comet</text>
+        <text x="200" y="265" text-anchor="middle" font-size="11" fill="#92400e">مدار المذنب شديد الإهليلجية</text>
+    </svg>`,
+    
+    kettle_energy: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">⚡ الغلاية الكهربائية - تدفق الطاقة</text>
+        <rect x="150" y="50" width="100" height="60" rx="8" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="85" text-anchor="middle" font-size="12" fill="#1e40af" font-weight="bold">2500 J/s</text>
+        <text x="200" y="100" text-anchor="middle" font-size="10" fill="#1e40af">مدخلات الطاقة</text>
+        <line x1="200" y1="110" x2="120" y2="160" stroke="#10b981" stroke-width="3" marker-end="url(#arrow1)"/>
+        <line x1="200" y1="110" x2="280" y2="160" stroke="#dc2626" stroke-width="3" marker-end="url(#arrow2)"/>
+        <defs><marker id="arrow1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#10b981"/></marker>
+        <marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/></marker></defs>
+        <rect x="60" y="160" width="120" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="120" y="185" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">2250 J/s</text>
+        <text x="120" y="200" text-anchor="middle" font-size="10" fill="#065f46">تسخين الماء (مفيد)</text>
+        <rect x="220" y="160" width="120" height="50" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="280" y="185" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">250 J/s</text>
+        <text x="280" y="200" text-anchor="middle" font-size="10" fill="#991b1b">مفقود للبيئة</text>
+        <text x="200" y="240" text-anchor="middle" font-size="11" fill="#1e40af">الكفاءة = 2250/2500 = 90%</text>
+    </svg>`,
+    
+    refraction: `<svg class="svg-graph" width="400" height="280" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="270" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">💡 الانكسار والانعكاس الكلي الداخلي</text>
+        <rect x="50" y="140" width="300" height="100" fill="#bfdbfe" opacity="0.5" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="195" text-anchor="middle" font-size="12" fill="#1e40af" font-weight="bold">الماء (n = 1.33)</text>
+        <text x="200" y="120" text-anchor="middle" font-size="12" fill="#374151">الهواء (n = 1.0)</text>
+        <line x1="50" y1="140" x2="350" y2="140" stroke="#374151" stroke-width="2"/>
+        <!-- Normal -->
+        <line x1="200" y1="60" x2="200" y2="220" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4"/>
+        <text x="210" y="70" font-size="10" fill="#6b7280">Normal</text>
+        <!-- Ray A: refracted -->
+        <line x1="130" y1="200" x2="200" y2="140" stroke="#2563eb" stroke-width="2"/>
+        <line x1="200" y1="140" x2="240" y2="80" stroke="#2563eb" stroke-width="2"/>
+        <text x="150" y="180" font-size="10" fill="#2563eb">A</text>
+        <!-- Ray B: critical angle -->
+        <line x1="160" y1="210" x2="200" y2="140" stroke="#f59e0b" stroke-width="2"/>
+        <line x1="200" y1="140" x2="280" y2="140" stroke="#f59e0b" stroke-width="2"/>
+        <text x="170" y="200" font-size="10" fill="#f59e0b">B (critical)</text>
+        <!-- Ray C, D: total internal reflection -->
+        <line x1="180" y1="220" x2="200" y2="140" stroke="#dc2626" stroke-width="2"/>
+        <line x1="200" y1="140" x2="280" y2="220" stroke="#dc2626" stroke-width="2"/>
+        <text x="185" y="215" font-size="10" fill="#dc2626">C, D</text>
+        <text x="200" y="265" text-anchor="middle" font-size="11" fill="#9f1239">sin(c) = 1/n → c ≈ 48.8° للماء</text>
+    </svg>`,
+    
+    phone_charger: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">🔌 شاحن الهاتف - قانون أوم</text>
+        <rect x="80" y="60" width="80" height="120" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="120" y="125" text-anchor="middle" font-size="11" fill="#065f46">V = 5V</text>
+        <text x="120" y="145" text-anchor="middle" font-size="11" fill="#065f46">I = 0.42A</text>
+        <line x1="160" y1="120" x2="240" y2="120" stroke="#374151" stroke-width="3"/>
+        <rect x="240" y="80" width="80" height="80" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="280" y="125" text-anchor="middle" font-size="11" fill="#92400e">Cable</text>
+        <text x="280" y="145" text-anchor="middle" font-size="10" fill="#92400e">R = V/I</text>
+        <line x1="240" y1="120" x2="320" y2="120" stroke="#374151" stroke-width="3"/>
+        <text x="200" y="220" text-anchor="middle" font-size="11" fill="#065f46">R = 5/0.42 ≈ 11.9 Ω</text>
+        <text x="200" y="240" text-anchor="middle" font-size="10" fill="#065f46">Q = I × t = 0.42 × 2700 = 1134 C</text>
+    </svg>`,
+    
+    sound_waves: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">🌊 الموجات الصوتية في الماء</text>
+        <line x1="50" y1="220" x2="350" y2="220" stroke="#374151" stroke-width="2"/>
+        <line x1="50" y1="220" x2="50" y2="40" stroke="#374151" stroke-width="2"/>
+        <text x="355" y="215" font-size="10" fill="#374151">f (Hz)</text>
+        <text x="20" y="130" text-anchor="middle" font-size="10" fill="#374151" transform="rotate(-90 20 130)">λ (m)</text>
+        <text x="100" y="235" font-size="9" fill="#374151">1</text>
+        <text x="175" y="235" font-size="9" fill="#374151">2</text>
+        <text x="250" y="235" font-size="9" fill="#374151">3</text>
+        <text x="325" y="235" font-size="9" fill="#374151">4</text>
+        <text x="40" y="200" font-size="9" fill="#374151">500</text>
+        <text x="40" y="130" font-size="9" fill="#374151">1000</text>
+        <text x="40" y="60" font-size="9" fill="#374151">1500</text>
+        <path d="M 100 80 Q 175 130 250 170 Q 300 195 325 205" fill="none" stroke="#f59e0b" stroke-width="3"/>
+        <circle cx="100" cy="80" r="4" fill="#dc2626"/>
+        <circle cx="175" cy="130" r="4" fill="#dc2626"/>
+        <circle cx="250" cy="170" r="4" fill="#dc2626"/>
+        <circle cx="325" cy="205" r="4" fill="#dc2626"/>
+        <text x="200" y="250" text-anchor="middle" font-size="11" fill="#92400e">علاقة عكسية: v = f × λ = 1530 m/s</text>
+    </svg>`,
+    
+    pressure_cylinder: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold"> أسطوانة الهيليوم والبالونات</text>
+        <rect x="150" y="60" width="100" height="140" rx="50" fill="#fbcfe8" stroke="#ec4899" stroke-width="3"/>
+        <text x="200" y="130" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">P₁ = 2300 kPa</text>
+        <text x="200" y="150" text-anchor="middle" font-size="10" fill="#9f1239">V₁ = 18000 cm³</text>
+        <line x1="250" y1="130" x2="320" y2="130" stroke="#ec4899" stroke-width="2" marker-end="url(#arrow3)"/>
+        <defs><marker id="arrow3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ec4899"/></marker></defs>
+        <circle cx="340" cy="130" r="25" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+        <text x="340" y="135" text-anchor="middle" font-size="9" fill="#9f1239">P₂=100</text>
+        <text x="200" y="220" text-anchor="middle" font-size="11" fill="#9f1239">P₁V₁ = P₂V₂ → V₂ = 414,000 cm³</text>
+        <text x="200" y="240" text-anchor="middle" font-size="10" fill="#9f1239">عدد البالونات = 414000/8200 ≈ 50</text>
+    </svg>`,
+    
+    satellite: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold">️ الأقمار الصناعية</text>
+        <circle cx="200" cy="140" r="60" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="145" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="bold">Earth</text>
+        <text x="200" y="160" text-anchor="middle" font-size="9" fill="#1e40af">R = 6371 km</text>
+        <circle cx="200" cy="140" r="90" fill="none" stroke="#7c3aed" stroke-width="2" stroke-dasharray="4"/>
+        <rect x="285" y="55" width="15" height="10" fill="#dc2626"/>
+        <line x1="292" y1="55" x2="292" y2="45" stroke="#dc2626" stroke-width="2"/>
+        <text x="310" y="50" font-size="10" fill="#dc2626" font-weight="bold">Iridium</text>
+        <text x="310" y="65" font-size="9" fill="#dc2626">h = 780 km</text>
+        <text x="200" y="220" text-anchor="middle" font-size="11" fill="#5b21b6">T = 2πr/v ≈ 99.8 min</text>
+        <text x="200" y="240" text-anchor="middle" font-size="10" fill="#5b21b6">عدد الدورات/يوم ≈ 14.4</text>
+    </svg>`,
+    
+    uv_intensity: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">☀️ شدة UV vs المسافة</text>
+        <line x1="50" y1="220" x2="370" y2="220" stroke="#374151" stroke-width="2"/>
+        <line x1="50" y1="220" x2="50" y2="40" stroke="#374151" stroke-width="2"/>
+        <text x="375" y="215" font-size="10" fill="#374151">Distance (cm)</text>
+        <text x="20" y="130" text-anchor="middle" font-size="10" fill="#374151" transform="rotate(-90 20 130)">Intensity</text>
+        <text x="100" y="235" font-size="9" fill="#374151">10</text>
+        <text x="175" y="235" font-size="9" fill="#374151">20</text>
+        <text x="250" y="235" font-size="9" fill="#374151">30</text>
+        <text x="325" y="235" font-size="9" fill="#374151">40</text>
+        <text x="40" y="200" font-size="9" fill="#374151">5</text>
+        <text x="40" y="130" font-size="9" fill="#374151">10</text>
+        <text x="40" y="60" font-size="9" fill="#374151">15</text>
+        <path d="M 100 60 Q 175 130 250 170 Q 300 195 325 205" fill="none" stroke="#f59e0b" stroke-width="3"/>
+        <circle cx="100" cy="60" r="4" fill="#dc2626"/>
+        <circle cx="175" cy="130" r="4" fill="#dc2626"/>
+        <circle cx="250" cy="170" r="4" fill="#dc2626"/>
+        <circle cx="325" cy="205" r="4" fill="#dc2626"/>
+        <text x="200" y="250" text-anchor="middle" font-size="11" fill="#92400e">علاقة عكسية: I ∝ 1/d²</text>
+    </svg>`,
+    
+    carbon14: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">☢️ اضمحلال الكربون-14</text>
+        <line x1="50" y1="220" x2="370" y2="220" stroke="#374151" stroke-width="2"/>
+        <line x1="50" y1="220" x2="50" y2="40" stroke="#374151" stroke-width="2"/>
+        <text x="375" y="215" font-size="10" fill="#374151">Time (years)</text>
+        <text x="20" y="130" text-anchor="middle" font-size="10" fill="#374151" transform="rotate(-90 20 130)">Activity (Bq)</text>
+        <text x="100" y="235" font-size="9" fill="#374151">5700</text>
+        <text x="200" y="235" font-size="9" fill="#374151">11400</text>
+        <text x="300" y="235" font-size="9" fill="#374151">17100</text>
+        <text x="40" y="200" font-size="9" fill="#374151">50</text>
+        <text x="40" y="130" font-size="9" fill="#374151">100</text>
+        <text x="40" y="60" font-size="9" fill="#374151">200</text>
+        <path d="M 50 60 Q 100 130 150 160 Q 250 200 350 215" fill="none" stroke="#10b981" stroke-width="3"/>
+        <line x1="50" y1="130" x2="150" y2="130" stroke="#dc2626" stroke-width="1" stroke-dasharray="3"/>
+        <line x1="150" y1="60" x2="150" y2="220" stroke="#dc2626" stroke-width="1" stroke-dasharray="3"/>
+        <text x="150" y="55" text-anchor="middle" font-size="9" fill="#dc2626">Half-life</text>
+        <text x="200" y="250" text-anchor="middle" font-size="11" fill="#065f46">T½ ≈ 5700 years</text>
+    </svg>`,
+    
+    thermal_conduction: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">🔥 التوصيل الحراري</text>
+        <rect x="50" y="100" width="300" height="20" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="90" text-anchor="middle" font-size="11" fill="#92400e">Flame </text>
+        <circle cx="100" cy="110" r="8" fill="#dc2626"/>
+        <circle cx="160" cy="110" r="8" fill="#f97316"/>
+        <circle cx="220" cy="110" r="8" fill="#fbbf24"/>
+        <circle cx="280" cy="110" r="8" fill="#9ca3af"/>
+        <text x="100" y="145" text-anchor="middle" font-size="9" fill="#991b1b">Copper</text>
+        <text x="160" y="145" text-anchor="middle" font-size="9" fill="#991b1b">Aluminum</text>
+        <text x="220" y="145" text-anchor="middle" font-size="9" fill="#991b1b">Iron</text>
+        <text x="280" y="145" text-anchor="middle" font-size="9" fill="#991b1b">Plastic</text>
+        <text x="200" y="180" text-anchor="middle" font-size="11" fill="#92400e">Copper أفضل موصل → تسقط الحلقة أولاً</text>
+        <text x="200" y="200" text-anchor="middle" font-size="11" fill="#92400e">Plastic عازل → لا تسقط الحلقة</text>
+        <text x="200" y="230" text-anchor="middle" font-size="10" fill="#92400e">الماء موصل رديء → الجليد يبقى مجمداً</text>
+    </svg>`,
+    
+    bernoulli: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">💨 مبدأ برنولي - سرعة المائع والضغط</text>
+        <path d="M 50 100 L 150 100 L 150 80 L 250 80 L 250 100 L 350 100 L 350 140 L 50 140 Z" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+        <text x="100" y="125" text-anchor="middle" font-size="10" fill="#1e40af">X: slow</text>
+        <text x="200" y="95" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">Y: fast, low P</text>
+        <text x="300" y="125" text-anchor="middle" font-size="10" fill="#1e40af">Z: slow</text>
+        <!-- Tubes showing pressure -->
+        <rect x="100" y="40" width="10" height="60" fill="#60a5fa" stroke="#2563eb"/>
+        <rect x="200" y="60" width="10" height="20" fill="#60a5fa" stroke="#2563eb"/>
+        <rect x="300" y="40" width="10" height="60" fill="#60a5fa" stroke="#2563eb"/>
+        <text x="105" y="35" text-anchor="middle" font-size="9" fill="#1e40af">A</text>
+        <text x="205" y="55" text-anchor="middle" font-size="9" fill="#dc2626">B</text>
+        <text x="305" y="35" text-anchor="middle" font-size="9" fill="#1e40af">C</text>
+        <text x="200" y="170" text-anchor="middle" font-size="11" fill="#1e40af">p = hρg → ارتفاع أقل = ضغط أقل</text>
+        <text x="200" y="190" text-anchor="middle" font-size="10" fill="#1e40af">سرعة أعلى → ضغط أقل (برنولي)</text>
+        <text x="200" y="220" text-anchor="middle" font-size="11" fill="#1e40af">🎈 البالونات تتحرك نحو بعضهما</text>
+    </svg>`
+};
+
+// ==================== EXAM DATA - 14 QUESTIONS ====================
+const originalExamData = {
+    modules: [
+        {
+            id: 'module1',
+            title: { ar: '📘 Module 1: الكهرباء والموجات (Q1-Q7)', en: '📘 Module 1: Electricity & Waves (Q1-Q7)' },
+            questions: [
+                {
+                    q: { ar: 'أي رمز يمثل الفولتميتر (Voltmeter) في الدوائر الكهربائية؟', en: 'Which symbol represents a voltmeter in electrical circuits?' },
+                    svg: svgGraphs.circuit_symbols,
+                    options: [
+                        { ar: 'دائرة بداخلها حرف V', en: 'Circle with letter V inside' },
+                        { ar: 'دائرة بداخلها حرف A', en: 'Circle with letter A inside' },
+                        { ar: 'مستطيل بخط متعرج', en: 'Rectangle with zigzag line' },
+                        { ar: 'دائرة بداخلها X', en: 'Circle with X inside' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الفولتميتر يرمز له بدائرة بداخلها V، ويوصل على التوازي', en: 'Voltmeter is represented by a circle with V inside, connected in parallel' }
+                },
+                {
+                    q: { ar: 'ما الفرق الرئيسي بين مدار المذنب ومدار الأرض؟', en: 'What is the main difference between a comet\'s orbit and Earth\'s orbit?' },
+                    svg: svgGraphs.orbits,
+                    options: [
+                        { ar: 'مدار المذنب شديد الإهليلجية (بيضاوي جداً)', en: 'Comet\'s orbit is highly elliptical' },
+                        { ar: 'مدار المذنب دائري تماماً', en: 'Comet\'s orbit is perfectly circular' },
+                        { ar: 'مدار الأرض بيضاوي جداً', en: 'Earth\'s orbit is very elliptical' },
+                        { ar: 'لا فرق بينهما', en: 'No difference' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'مدار المذنب شديد الإهليلجية بينما مدار الأرض شبه دائري', en: 'Comet\'s orbit is highly elliptical while Earth\'s is nearly circular' }
+                },
+                {
+                    q: { ar: 'غلاية تستخدم 2500 J/s، منها 2250 J لتسخين الماء و 250 J مفقودة. ما إجمالي مدخلات الطاقة في ثانية واحدة؟', en: 'Kettle uses 2500 J/s, 2250 J heats water, 250 J lost. Total energy input per second?' },
+                    svg: svgGraphs.kettle_energy,
+                    options: [
+                        { ar: '<span class="math-display">2500 J</span>', en: '<span class="math-display">2500 J</span>' },
+                        { ar: '<span class="math-display">2250 J</span>', en: '<span class="math-display">2250 J</span>' },
+                        { ar: '<span class="math-display">250 J</span>', en: '<span class="math-display">250 J</span>' },
+                        { ar: '<span class="math-display">2000 J</span>', en: '<span class="math-display">2000 J</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الإجمالي = 2250 + 250 = 2500 J', en: 'Total = 2250 + 250 = 2500 J' }
+                },
+                {
+                    q: { ar: 'غلاية قدرتها 2500 W تعمل على جهد 230 V. ما التيار تقريباً؟', en: 'Kettle power 2500 W at 230 V. What is the current approximately?' },
+                    options: [
+                        { ar: '<span class="math-display">≈ 11 A</span>', en: '<span class="math-display">≈ 11 A</span>' },
+                        { ar: '<span class="math-display">≈ 5 A</span>', en: '<span class="math-display">≈ 5 A</span>' },
+                        { ar: '<span class="math-display">≈ 15 A</span>', en: '<span class="math-display">≈ 15 A</span>' },
+                        { ar: '<span class="math-display">≈ 8 A</span>', en: '<span class="math-display">≈ 8 A</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'I = P/V = 2500/230 ≈ 10.87 A ≈ 11 A', en: 'I = P/V = 2500/230 ≈ 10.87 A ≈ 11 A' }
+                },
+                {
+                    q: { ar: 'كيف يمنع المصهر (Fuse) ذو 13A السلك من السخونة الزائدة؟', en: 'How does a 13A fuse prevent the wire from overheating?' },
+                    options: [
+                        { ar: 'ينصهر عند تجاوز التيار 13A ويقطع الدائرة', en: 'Melts when current exceeds 13A and breaks the circuit' },
+                        { ar: 'يقلل الجهد تلقائياً', en: 'Automatically reduces voltage' },
+                        { ar: 'يزيد المقاومة', en: 'Increases resistance' },
+                        { ar: 'يبرد السلك', en: 'Cools the wire' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما يتجاوز التيار 13A، ينصهر سلك المصهر ويقطع الدائرة', en: 'When current exceeds 13A, fuse wire melts and breaks circuit' }
+                },
+                {
+                    q: { ar: 'ما العبارتان الصحيحتان عن الصورة في المرآة المستوية؟', en: 'Which two statements are correct about image in a plane mirror?' },
+                    options: [
+                        { ar: 'زاوية السقوط = زاوية الانعكاس، والصورة وهمية', en: 'Angle of incidence = angle of reflection, image is virtual' },
+                        { ar: 'الصورة حقيقية ومكبرة', en: 'Image is real and magnified' },
+                        { ar: 'زاوية السقوط > زاوية الانعكاس', en: 'Angle of incidence > angle of reflection' },
+                        { ar: 'الصورة مقلوبة وحقيقية', en: 'Image is inverted and real' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'في المرآة المستوية: زاوية السقوط = زاوية الانعكاس، والصورة وهمية (virtual)', en: 'In plane mirror: angle of incidence = angle of reflection, image is virtual' }
+                },
+                {
+                    q: { ar: 'ما معادلة معامل الانكسار (Refractive Index)؟', en: 'What is the equation for refractive index?' },
+                    svg: svgGraphs.refraction,
+                    options: [
+                        { ar: '<span class="math-display">n = sin(i) / sin(r)</span>', en: '<span class="math-display">n = sin(i) / sin(r)</span>' },
+                        { ar: '<span class="math-display">n = sin(r) / sin(i)</span>', en: '<span class="math-display">n = sin(r) / sin(i)</span>' },
+                        { ar: '<span class="math-display">n = v × f</span>', en: '<span class="math-display">n = v × f</span>' },
+                        { ar: '<span class="math-display">n = λ × f</span>', en: '<span class="math-display">n = λ × f</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'n = sin(i)/sin(r) حيث i زاوية السقوط و r زاوية الانكسار', en: 'n = sin(i)/sin(r) where i is angle of incidence and r is angle of refraction' }
+                },
+                {
+                    q: { ar: 'شاحن هاتف: V = 5V, I = 0.42A, t = 45 min. ما الشحنة Q؟', en: 'Phone charger: V = 5V, I = 0.42A, t = 45 min. What is charge Q?' },
+                    svg: svgGraphs.phone_charger,
+                    options: [
+                        { ar: '<span class="math-display">1134 C</span>', en: '<span class="math-display">1134 C</span>' },
+                        { ar: '<span class="math-display">18.9 C</span>', en: '<span class="math-display">18.9 C</span>' },
+                        { ar: '<span class="math-display">113.4 C</span>', en: '<span class="math-display">113.4 C</span>' },
+                        { ar: '<span class="math-display">2700 C</span>', en: '<span class="math-display">2700 C</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 't = 45 × 60 = 2700 s. Q = I × t = 0.42 × 2700 = 1134 C', en: 't = 45 × 60 = 2700 s. Q = I × t = 0.42 × 2700 = 1134 C' }
+                },
+                {
+                    q: { ar: 'ما العلاقة بين التردد والطول الموجي في الموجات الصوتية؟', en: 'What is the relationship between frequency and wavelength in sound waves?' },
+                    svg: svgGraphs.sound_waves,
+                    options: [
+                        { ar: 'علاقة عكسية: كلما زاد التردد قل الطول الموجي', en: 'Inverse: as frequency increases, wavelength decreases' },
+                        { ar: 'علاقة طردية', en: 'Direct relationship' },
+                        { ar: 'لا علاقة', en: 'No relationship' },
+                        { ar: 'علاقة أسية', en: 'Exponential relationship' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'v = f × λ، وبثبوت السرعة، العلاقة عكسية بين f و λ', en: 'v = f × λ, with constant v, relationship between f and λ is inverse' }
+                },
+                {
+                    q: { ar: 'موجة صوتية في الماء: f = 3.0 Hz, λ = 510 m. ما السرعة؟', en: 'Sound wave in water: f = 3.0 Hz, λ = 510 m. What is the speed?' },
+                    options: [
+                        { ar: '<span class="math-display">1530 m/s</span>', en: '<span class="math-display">1530 m/s</span>' },
+                        { ar: '<span class="math-display">170 m/s</span>', en: '<span class="math-display">170 m/s</span>' },
+                        { ar: '<span class="math-display">153 m/s</span>', en: '<span class="math-display">153 m/s</span>' },
+                        { ar: '<span class="math-display">3000 m/s</span>', en: '<span class="math-display">3000 m/s</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'v = f × λ = 3.0 × 510 = 1530 m/s', en: 'v = f × λ = 3.0 × 510 = 1530 m/s' }
+                },
+                {
+                    q: { ar: 'لماذا السكين الحاد يقطع أفضل من السكين غير الحاد؟', en: 'Why does a sharp knife cut better than a blunt one?' },
+                    options: [
+                        { ar: 'مساحة السطح الأصغر تنتج ضغطاً أعلى عند نفس القوة', en: 'Smaller surface area produces higher pressure at same force' },
+                        { ar: 'السكين الحاد أخف وزناً', en: 'Sharp knife is lighter' },
+                        { ar: 'السكين الحاد أقوى', en: 'Sharp knife is stronger' },
+                        { ar: 'لا فرق', en: 'No difference' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'P = F/A، مساحة أصغر → ضغط أعلى → قطع أسهل', en: 'P = F/A, smaller area → higher pressure → easier cutting' }
+                },
+                {
+                    q: { ar: 'أسطوانة هيليوم: P₁=2300 kPa, V₁=18000 cm³. عند P₂=100 kPa، ما V₂؟', en: 'Helium cylinder: P₁=2300 kPa, V₁=18000 cm³. At P₂=100 kPa, what is V₂?' },
+                    svg: svgGraphs.pressure_cylinder,
+                    options: [
+                        { ar: '<span class="math-display">414,000 cm³</span>', en: '<span class="math-display">414,000 cm³</span>' },
+                        { ar: '<span class="math-display">783 cm³</span>', en: '<span class="math-display">783 cm³</span>' },
+                        { ar: '<span class="math-display">18000 cm³</span>', en: '<span class="math-display">18000 cm³</span>' },
+                        { ar: '<span class="math-display">23000 cm³</span>', en: '<span class="math-display">23000 cm³</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'P₁V₁ = P₂V₂ → V₂ = (2300×18000)/100 = 414,000 cm³', en: 'P₁V₁ = P₂V₂ → V₂ = (2300×18000)/100 = 414,000 cm³' }
+                },
+                {
+                    q: { ar: 'عربة كتلتها 0.87 kg تتسارع بمعدل 7.9 m/s². ما القوة المحصلة؟', en: 'Cart mass 0.87 kg accelerates at 7.9 m/s². What is the resultant force?' },
+                    options: [
+                        { ar: '<span class="math-display">6.87 N</span>', en: '<span class="math-display">6.87 N</span>' },
+                        { ar: '<span class="math-display">9.08 N</span>', en: '<span class="math-display">9.08 N</span>' },
+                        { ar: '<span class="math-display">0.11 N</span>', en: '<span class="math-display">0.11 N</span>' },
+                        { ar: '<span class="math-display">8.77 N</span>', en: '<span class="math-display">8.77 N</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'F = ma = 0.87 × 7.9 = 6.873 N ≈ 6.87 N', en: 'F = ma = 0.87 × 7.9 = 6.873 N ≈ 6.87 N' }
+                },
+                {
+                    q: { ar: 'كتلة 5 kg ترتفع 0.65 m. ما التغير في طاقة الوضع؟ (g=10)', en: '5 kg mass rises 0.65 m. What is the change in GPE? (g=10)' },
+                    options: [
+                        { ar: '<span class="math-display">32.5 J</span>', en: '<span class="math-display">32.5 J</span>' },
+                        { ar: '<span class="math-display">65 J</span>', en: '<span class="math-display">65 J</span>' },
+                        { ar: '<span class="math-display">16.25 J</span>', en: '<span class="math-display">16.25 J</span>' },
+                        { ar: '<span class="math-display">50 J</span>', en: '<span class="math-display">50 J</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'GPE = mgh = 5 × 10 × 0.65 = 32.5 J', en: 'GPE = mgh = 5 × 10 × 0.65 = 32.5 J' }
+                }
+            ]
+        },
+        {
+            id: 'module2',
+            title: { ar: ' Module 2: الأقمار، الإشعاع، والحرارة (Q8-Q14)', en: '📙 Module 2: Satellites, Radiation & Heat (Q8-Q14)' },
+            questions: [
+                {
+                    q: { ar: 'قمر Iridium على ارتفاع 780 km، سرعته 7.50 km/s. ما دورته الزمنية تقريباً؟ (R_earth=6371 km)', en: 'Iridium satellite at 780 km altitude, speed 7.50 km/s. What is its period? (R_earth=6371 km)' },
+                    svg: svgGraphs.satellite,
+                    options: [
+                        { ar: '<span class="math-display">≈ 100 min</span>', en: '<span class="math-display">≈ 100 min</span>' },
+                        { ar: '<span class="math-display">≈ 50 min</span>', en: '<span class="math-display">≈ 50 min</span>' },
+                        { ar: '<span class="math-display">≈ 200 min</span>', en: '<span class="math-display">≈ 200 min</span>' },
+                        { ar: '<span class="math-display">≈ 24 hours</span>', en: '<span class="math-display">≈ 24 hours</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'r = 6371+780 = 7151 km. C = 2πr ≈ 44931 km. T = 44931/7.50 ≈ 5991 s ≈ 99.8 min', en: 'r = 6371+780 = 7151 km. C = 2πr ≈ 44931 km. T = 44931/7.50 ≈ 5991 s ≈ 99.8 min' }
+                },
+                {
+                    q: { ar: 'أي العبارات صحيحة عن الأقمار الصناعية؟', en: 'Which statement is correct about satellites?' },
+                    options: [
+                        { ar: 'الأقمار ذات الارتفاع الأقل لها دورات زمنية أقصر', en: 'Lower altitude satellites have shorter periods' },
+                        { ar: 'كلما زادت السرعة زاد الارتفاع', en: 'Higher speed means higher altitude' },
+                        { ar: 'جميع الأقمار لها نفس الدورة', en: 'All satellites have the same period' },
+                        { ar: 'الأقمار الأعلى أسرع', en: 'Higher satellites are faster' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الأقمار ذات الارتفاع الأقل تدور أسرع ولها دورات زمنية أقصر', en: 'Lower altitude satellites orbit faster and have shorter periods' }
+                },
+                {
+                    q: { ar: 'أي رسم بياني أفضل لعرض علاقة شدة UV بالمسافة؟', en: 'Which graph is better for showing UV intensity vs distance?' },
+                    svg: svgGraphs.uv_intensity,
+                    options: [
+                        { ar: 'الرسم الذي يوزع النقاط بشكل واضح على المحاور', en: 'Graph that distributes points clearly on axes' },
+                        { ar: 'الرسم الذي يضغط النقاط في زاوية صغيرة', en: 'Graph that compresses points in small corner' },
+                        { ar: 'الرسم بدون محاور', en: 'Graph without axes' },
+                        { ar: 'الرسم بالنقاط فقط', en: 'Graph with dots only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الرسم الجيد يوزع النقاط بشكل واضح ليسهل قراءة القيم', en: 'Good graph distributes points clearly for easy reading' }
+                },
+                {
+                    q: { ar: 'مقارنة موجات ألفا ودلتا في الدماغ:', en: 'Comparison of alpha and delta brain waves:' },
+                    options: [
+                        { ar: 'سعة ألفا أصغر وتردد ألفا أعلى', en: 'Alpha has smaller amplitude and higher frequency' },
+                        { ar: 'سعة ألفا أكبر وتردد ألفا أقل', en: 'Alpha has larger amplitude and lower frequency' },
+                        { ar: 'كلاهما متساويان', en: 'Both are equal' },
+                        { ar: 'دلتا أسرع من ألفا', en: 'Delta is faster than alpha' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'موجات ألفا: سعة أصغر وتردد أعلى من دلتا', en: 'Alpha waves: smaller amplitude and higher frequency than delta' }
+                },
+                {
+                    q: { ar: 'كيف تتحرك جزيئات الوسط في الموجة المستعرضة (Transverse)؟', en: 'How do particles move in a transverse wave?' },
+                    options: [
+                        { ar: 'عمودياً على اتجاه انتشار الموجة', en: 'Perpendicular to wave propagation direction' },
+                        { ar: 'موازياً لاتجاه الانتشار', en: 'Parallel to propagation direction' },
+                        { ar: 'في دوائر', en: 'In circles' },
+                        { ar: 'لا تتحرك', en: 'They don\'t move' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'في الموجة المستعرضة، الجزيئات تتحرك عمودياً على اتجاه الانتشار', en: 'In transverse wave, particles move perpendicular to propagation' }
+                },
+                {
+                    q: { ar: 'ماذا يحدث للشعاع الضوئي عندما تكون زاوية السقوط أكبر من الزاوية الحرجة؟', en: 'What happens to light ray when angle of incidence exceeds critical angle?' },
+                    svg: svgGraphs.refraction,
+                    options: [
+                        { ar: 'انعكاس كلي داخلي (Total Internal Reflection)', en: 'Total Internal Reflection' },
+                        { ar: 'انكسار كامل', en: 'Complete refraction' },
+                        { ar: 'امتصاص كامل', en: 'Complete absorption' },
+                        { ar: 'لا شيء', en: 'Nothing' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما تتجاوز زاوية السقوط الزاوية الحرجة، يحدث انعكاس كلي داخلي', en: 'When incidence angle exceeds critical angle, total internal reflection occurs' }
+                },
+                {
+                    q: { ar: 'في المعادلة النووية: ¹⁴₇N + ¹₀n → ¹⁴₆C + X. ما الجسيم X؟', en: 'In nuclear equation: ¹⁴N + ¹₀n → ¹⁴₆C + X. What is particle X?' },
+                    options: [
+                        { ar: 'بروتون (¹₁p)', en: 'Proton (¹₁p)' },
+                        { ar: 'نيوترون (¹₀n)', en: 'Neutron (¹₀n)' },
+                        { ar: 'إلكترون (⁰₋₁e)', en: 'Electron (⁰₋₁e)' },
+                        { ar: 'جسيم ألفا (₂He)', en: 'Alpha particle (⁴₂He)' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بحفظ العدد الكتلي والذري: X = ¹₁p (بروتون)', en: 'By conserving mass and atomic numbers: X = ¹₁p (proton)' }
+                },
+                {
+                    q: { ar: 'ما الفرق بين C-14 و C-12؟', en: 'What is the difference between C-14 and C-12?' },
+                    options: [
+                        { ar: 'C-14 له نيوترونين أكثر من C-12', en: 'C-14 has 2 more neutrons than C-12' },
+                        { ar: 'C-14 له بروتونين أكثر', en: 'C-14 has 2 more protons' },
+                        { ar: 'C-14 له إلكترونين أقل', en: 'C-14 has 2 fewer electrons' },
+                        { ar: 'لا فرق', en: 'No difference' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'كلاهما 6 بروتونات، لكن C-14 له 8 نيوترونات و C-12 له 6 نيوترونات', en: 'Both have 6 protons, but C-14 has 8 neutrons and C-12 has 6 neutrons' }
+                },
+                {
+                    q: { ar: 'ما عمر النصف للكربون-14 تقريباً؟', en: 'What is the approximate half-life of Carbon-14?' },
+                    svg: svgGraphs.carbon14,
+                    options: [
+                        { ar: '<span class="math-display">≈ 5700 سنة</span>', en: '<span class="math-display">≈ 5700 years</span>' },
+                        { ar: '<span class="math-display">≈ 1000 سنة</span>', en: '<span class="math-display">≈ 1000 years</span>' },
+                        { ar: '<span class="math-display">≈ 10000 سنة</span>', en: '<span class="math-display">≈ 10000 years</span>' },
+                        { ar: '<span class="math-display">≈ 570 سنة</span>', en: '<span class="math-display">≈ 570 years</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عمر النصف لـ C-14 ≈ 5700 سنة (أو 5730 سنة بدقة)', en: 'Half-life of C-14 ≈ 5700 years (or 5730 precisely)' }
+                },
+                {
+                    q: { ar: 'لماذا لا يمكن استخدام C-14 لتأريخ عظم ديناصور عمره 68 مليون سنة؟', en: 'Why can\'t C-14 date a 68 million year old dinosaur bone?' },
+                    options: [
+                        { ar: 'عمر النصف قصير (5700 سنة)، لن يتبقى C-14 قابل للقياس', en: 'Short half-life (5700 years), no measurable C-14 remains' },
+                        { ar: 'C-14 غير موجود في العظام', en: 'C-14 not found in bones' },
+                        { ar: 'الديناصورات لا تحتوي على كربون', en: 'Dinosaurs don\'t contain carbon' },
+                        { ar: 'C-14 يزيد مع الزمن', en: 'C-14 increases with time' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بعد 68 مليون سنة (≈ 12000 عمر نصف)، كمية C-14 المتبقية ضئيلة جداً', en: 'After 68 million years (~12000 half-lives), remaining C-14 is negligible' }
+                },
+                {
+                    q: { ar: 'في تجربة القضبان المعدنية مع الحلقات الشمعية، أي مادة تسقط حلقاتها أولاً؟', en: 'In metal rods with wax rings experiment, which material\'s rings fall first?' },
+                    svg: svgGraphs.thermal_conduction,
+                    options: [
+                        { ar: 'النحاس (أفضل موصل)', en: 'Copper (best conductor)' },
+                        { ar: 'الحديد', en: 'Iron' },
+                        { ar: 'الألومنيوم', en: 'Aluminum' },
+                        { ar: 'البلاستيك', en: 'Plastic' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'النحاس أفضل موصل للحرارة، فتسقط حلقاته أولاً', en: 'Copper is best heat conductor, so its rings fall first' }
+                },
+                {
+                    q: { ar: 'لماذا يبقى الجليد مجمداً عند تسخين أعلى الأنبوب المليء بالماء؟', en: 'Why does ice stay frozen when heating top of water-filled tube?' },
+                    options: [
+                        { ar: 'الماء موصل رديء للحرارة، ولا تتشكل تيارات حمل للأسفل', en: 'Water is poor heat conductor, no convection currents downward' },
+                        { ar: 'الماء موصل ممتاز', en: 'Water is excellent conductor' },
+                        { ar: 'الجليد يمتص الحرارة', en: 'Ice absorbs heat' },
+                        { ar: 'لا سبب واضح', en: 'No clear reason' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الماء موصل رديء، والماء الساخن الأقل كثافة يبقى في الأعلى', en: 'Water is poor conductor, hot less dense water stays at top' }
+                },
+                {
+                    q: { ar: 'لماذا تحترق الورقة على القضيب الخشبي وليس على النحاسي عند التسخين؟', en: 'Why does paper burn on wooden rod but not on copper when heated?' },
+                    options: [
+                        { ar: 'النحاس موصل جيد ينقل الحرارة بعيداً، الخشب عازل', en: 'Copper is good conductor transferring heat away, wood is insulator' },
+                        { ar: 'الخشب يحترق أسرع', en: 'Wood burns faster' },
+                        { ar: 'النحاس يبرد الورقة', en: 'Copper cools the paper' },
+                        { ar: 'لا فرق', en: 'No difference' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'النحاس ينقل الحرارة بسرعة بعيداً عن الورقة، الخشب يحبس الحرارة', en: 'Copper conducts heat away quickly, wood traps heat at paper' }
+                },
+                {
+                    q: { ar: 'لماذا تتحرك بالونان نحو بعضهما عند النفخ بينهما؟', en: 'Why do two balloons move together when blowing between them?' },
+                    svg: svgGraphs.bernoulli,
+                    options: [
+                        { ar: 'سرعة الهواء الأعلى تسبب ضغطاً أقل (مبدأ برنولي)', en: 'Higher air speed causes lower pressure (Bernoulli\'s principle)' },
+                        { ar: 'الهواء يدفعهما', en: 'Air pushes them' },
+                        { ar: 'الجاذبية', en: 'Gravity' },
+                        { ar: 'الكهرباء الساكنة', en: 'Static electricity' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'وفقاً لمبدأ برنولي: سرعة أعلى → ضغط أقل → الضغط الخارجي يدفع البالونين للداخل', en: 'Bernoulli: higher speed → lower pressure → external pressure pushes balloons inward' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = TOTAL_TIME;
+let timerInterval;
+
+function prepareShuffledExam() {
+    rng = mulberry32(currentSeed);
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    examData.modules.forEach((module) => {
+        module.questions = shuffleArray(module.questions);
+        module.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({ option: opt, isCorrect: idx === q.correct }));
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            q.correct = shuffledOptions.findIndex(o => o.isCorrect);
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + q.correct);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    const msg = currentLang === 'ar' ? '🔄 أسئلة جديدة ومسح الإجابات. متأكد؟' : '🔄 New questions and clear answers. Sure?';
+    if (confirm(msg)) {
+        currentSeed = Date.now(); timeRemaining = TOTAL_TIME; answersVisible = false;
+        prepareShuffledExam(); renderExam(); saveState();
+        alert(currentLang === 'ar' ? ' تم تغيير الأسئلة! حظاً موفقاً! ' : '🎲 Questions changed! Good luck! 🍀');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.body.classList.toggle('en-mode', lang === 'en');
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.innerHTML = lang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+    renderExam(); saveState(false);
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = { ar: { option: ['A', 'B', 'C', 'D'], answer: '✅ الإجابة:' }, en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' } };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    let html = '';
+    let globalIdx = 0;
+
+    examData.modules.forEach((module, modIdx) => {
+        const badgeClass = modIdx === 0 ? 'module-1' : 'module-2';
+        html += `<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-red-100 mb-8">
+            <div class="text-center mb-4"><span class="module-badge ${badgeClass}">${module.title[currentLang]}</span></div>
+            <ol class="space-y-4 text-sm">`;
+        module.questions.forEach((q) => {
+            const bs = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `<li class="${bs} border-red-400 py-2" id="q-${globalIdx}">
+                <strong class="text-red-700">${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+            if (q.svg) html += `<div class="graph-container">${q.svg}</div>`;
+            q.options.forEach((opt, oIdx) => {
+                const rs = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `<label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'} hover:bg-red-50 rounded-lg p-1 transition">
+                    <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${rs}">
+                    ${lbl.option[oIdx]}) ${opt[currentLang]}</label>`;
+            });
+            html += `<div class="answer-box text-green-700 mt-2 font-medium ${answersVisible ? '' : 'hidden'} bg-green-50 rounded-lg p-2">
+                ${lbl.answer} ${lbl.option[q.correct]}) ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}</div></li>`;
+            globalIdx++;
+        });
+        html += `</ol></section>`;
+    });
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--; updateTimerDisplay();
+        if (timeRemaining % 60 === 0) saveState(false);
+        if (timeRemaining <= 600) document.getElementById('timer').classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? " انتهى الوقت!" : "⏰ Time's up!");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(timeRemaining / 60); const s = timeRemaining % 60;
+    document.getElementById('timer').textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function toggleAnswers() {
+    answersVisible = !answersVisible;
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    saveState(false);
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const moduleScores = [0, 0];
+    let globalIdx = 0;
+    examData.modules.forEach((module, modIdx) => {
+        module.questions.forEach(() => {
+            const sel = document.querySelector(`input[name="q${globalIdx}"]:checked`);
+            const li = document.getElementById(`q-${globalIdx}`);
+            if (li) {
+                const isCorrect = sel && sel.value === correctAnswersMap[globalIdx];
+                if (isCorrect) {
+                    correctCount++;
+                    li.classList.add('correct');
+                    li.classList.remove('incorrect');
+                    moduleScores[modIdx]++;
+                } else {
+                    li.classList.add('incorrect');
+                    li.classList.remove('correct');
+                }
+            }
+            globalIdx++;
+        });
+    });
+    const score = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+    document.getElementById('res-total').textContent = `${score} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'بطل' : 'Champion');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-GB' : 'en-GB');
+    const pc = document.getElementById('sections-performance'); pc.innerHTML = '';
+    examData.modules.forEach((m, idx) => {
+        pc.innerHTML += `<div class="flex justify-between items-center p-3 bg-white rounded-lg"><span class="text-gray-700">${m.title[currentLang]}</span><span class="font-bold text-red-700">${moduleScores[idx]}/${m.questions.length}</span></div>`;
+    });
+    const badge = document.getElementById('success-badge');
+    document.getElementById('success-percent').textContent = `${score}%`;
+    if (currentLang === 'ar') {
+        if (score >= 90) { badge.textContent = '🌟 ممتاز جداً! (Grade 9)'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = ' ممتاز! (Grade 7-8)'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 جيد (Grade 4-6)'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 حاول مرة أخرى'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (score >= 90) { badge.textContent = '🌟 Outstanding! (Grade 9)'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = ' Excellent! (Grade 7-8)'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 Good (Grade 4-6)'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 Try Again'; badge.className = 'success-badge grade-fail'; }
+    }
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : ' Sending...';
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.getElementById('examDate').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+    let questionsHTML = ''; let globalIdx = 0;
+    examData.modules.forEach((module, modIdx) => {
+        questionsHTML += `<tr style="background:linear-gradient(135deg,#dc2626,#b91c1c);color:white;"><td colspan="5" style="padding:12px;font-weight:bold;"> ${module.title[currentLang]}</td></tr>`;
+        module.questions.forEach((q) => {
+            const sel = document.querySelector(`input[name="q${globalIdx}"]:checked`);
+            const sv = sel ? sel.value : null; const cv = correctAnswersMap[globalIdx]; const ic = sv === cv;
+            let sat = currentLang==='ar'?'❌ لم يجب':'❌ No answer'; let sac = '#dc2626';
+            if (sv) { const si = sv.charCodeAt(0)-97; sat = q.options[si][currentLang]; sac = ic?'#059669':'#dc2626'; }
+            const cat = q.options[q.correct][currentLang];
+            const rb = ic?'#f0fdf4':'#fef2f2'; const bl = ic?'4px solid #10b981':'4px solid #ef4444';
+            questionsHTML += `<tr style="background:${rb};border-right:${bl};"><td style="padding:10px;border:1px solid #e5e7eb;text-align:center;font-weight:bold;">${globalIdx+1}</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:#991b1b;">${currentLang==='ar'?'❓ السؤال:':'❓ Question:'}</strong><br><span style="font-size:13px;">${q.q[currentLang]}</span></td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:${sac};">${currentLang==='ar'?'✍️ إجابة الطالب:':'✍️ Student:'}</strong><br><span style="color:${sac};font-size:13px;">${sat}</span></td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:#059669;">${currentLang==='ar'?'✅ الصحيحة:':'✅ Correct:'}</strong><br><span style="color:#059669;font-size:13px;">${cat}</span></td><td style="padding:10px;border:1px solid #e5e7eb;text-align:center;">${ic?'<span style="font-size:24px;">✅</span>':'<span style="font-size:24px;">❌</span>'}</td></tr>`;
+            globalIdx++;
+        });
+    });
+    const answersHTML = `<div style="font-family:'Segoe UI',Tahoma,Arial;direction:${currentLang==='ar'?'rtl':'ltr'};"><div style="background:linear-gradient(135deg,#dc2626,#b91c1c);color:white;padding:20px;border-radius:10px 10px 0 0;text-align:center;"><h2 style="margin:0;">🔬 ${currentLang==='ar'?'نتيجة امتحان IGCSE Physics Paper 1P':'IGCSE Physics Paper 1P Exam Result'}</h2><p style="margin:5px 0 0;opacity:0.9;">Comprehensive - 14 Questions</p></div><div style="background:#fef2f2;padding:15px;"><table style="width:100%;border-collapse:collapse;"><tr><td style="padding:8px;font-weight:bold;color:#991b1b;">${currentLang==='ar'?'😊 الاسم:':'😊 Name:'}</td><td style="padding:8px;">${name}</td><td style="padding:8px;font-weight:bold;color:#991b1b;">${currentLang==='ar'?' الشعبة:':'🏫 Class:'}</td><td style="padding:8px;">${studentClass}</td></tr><tr><td style="padding:8px;font-weight:bold;color:#991b1b;">${currentLang==='ar'?' التاريخ:':'📅 Date:'}</td><td style="padding:8px;">${date}</td><td style="padding:8px;font-weight:bold;color:#991b1b;">${currentLang==='ar'?'🏆 التقدير:':' Grade:'}</td><td style="padding:8px;">${badge}</td></tr></table></div><div style="background:white;padding:20px;text-align:center;"><div style="display:inline-block;margin:0 15px;"><div style="font-size:32px;font-weight:bold;color:#dc2626;">${score}</div><div style="color:#6b7280;font-size:13px;">${currentLang==='ar'?'الدرجة':'Score'}</div></div><div style="display:inline-block;margin:0 15px;"><div style="font-size:32px;font-weight:bold;color:#059669;">${successRate}%</div><div style="color:#6b7280;font-size:13px;">${currentLang==='ar'?'النسبة':'Rate'}</div></div></div><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:#dc2626;color:white;"><th style="padding:10px;border:1px solid #b91c1c;">#</th><th style="padding:10px;border:1px solid #b91c1c;">${currentLang==='ar'?'السؤال':'Question'}</th><th style="padding:10px;border:1px solid #b91c1c;">${currentLang==='ar'?'إجابة الطالب':'Student'}</th><th style="padding:10px;border:1px solid #b91c1c;">${currentLang==='ar'?'الصحيحة':'Correct'}</th><th style="padding:10px;border:1px solid #b91c1c;">${currentLang==='ar'?'النتيجة':'Result'}</th></tr></thead><tbody>${questionsHTML}</tbody></table><div style="background:linear-gradient(135deg,#fef2f2,#fee2e2);padding:15px;border-radius:0 0 10px 10px;"><p style="margin:0;color:#991b1b;text-align:center;"> <strong>${currentLang==='ar'?'أحسنت يا بطل! استمر في التميز في الفيزياء!':'Great job! Keep excelling in Physics!'}</strong> 🔬</p><p style="margin:5px 0 0;color:#991b1b;text-align:center;font-size:12px;">${currentLang==='ar'?'تم الإرسال تلقائياً | Mr. Mohammed Hesham':'Auto-sent | Mr. Mohammed Hesham'}</p></div></div>`;
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, { to_email: TARGET_EMAIL, student_name: name, student_class: studentClass, exam_date: date, total_score: score, success_rate: successRate, grade: badge, answers_table: answersHTML }).then(() => {
+        status.textContent = currentLang==='ar'?'✅ تم الإرسال بنجاح!':'✅ Sent successfully!'; status.style.color = '#059669'; btn.textContent = currentLang==='ar'?'✓ تم':'✓ Sent';
+    }).catch(err => {
+        status.textContent = currentLang==='ar'?'❌ حدث خطأ':'❌ Error'; status.style.color = '#dc2626'; btn.disabled = false; btn.textContent = currentLang==='ar'?'📧 حاول مرة أخرى':'📧 Try Again'; console.error(err);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = loadState();
+    if (saved && saved.seed) {
+        currentSeed = saved.seed; currentLang = saved.lang || 'ar';
+        timeRemaining = saved.timeRemaining !== undefined ? saved.timeRemaining : TOTAL_TIME;
+        answersVisible = saved.answersVisible || false;
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('btn-ar').classList.toggle('active', currentLang === 'ar');
+        document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+        document.body.classList.toggle('en-mode', currentLang === 'en');
+        document.querySelectorAll('[data-ar][data-en]').forEach(el => { el.innerHTML = currentLang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en'); });
+    } else { currentSeed = Date.now(); }
+    prepareShuffledExam(); renderExam();
+    if (saved) {
+        if (saved.studentName) document.getElementById('studentName').value = saved.studentName;
+        if (saved.studentClass) document.getElementById('studentClass').value = saved.studentClass;
+        if (saved.examDate) document.getElementById('examDate').value = saved.examDate;
+        if (saved.answers) restoreAnswers(saved.answers);
+    }
+    setupAnswerListeners(); setupInputListeners(); startTimer();
+});
+window.addEventListener('beforeunload', () => saveState(false));
+</script>
+</body>
+</html>
